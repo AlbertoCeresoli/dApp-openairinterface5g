@@ -253,7 +253,8 @@ int e3_destroy()
 int e3_send_xapp_control(uint32_t dapp_id,
                          uint32_t ran_function_id,
                          const uint8_t *data,
-                         size_t len)
+                         size_t len,
+                         uint32_t sequence_id)
 {
   if (!e3.agent) {
     LOG_E(E3AP, "E3 agent not initialized: cannot send xApp control\n");
@@ -265,7 +266,7 @@ int e3_send_xapp_control(uint32_t dapp_id,
     return -1;
   }
 
-  e3_error_t err = e3_agent_send_xapp_control(e3.agent, dapp_id, ran_function_id, data, len);
+  e3_error_t err = e3_agent_send_xapp_control(e3.agent, dapp_id, ran_function_id, data, len, sequence_id);
   if (err != E3_SUCCESS) {
     LOG_E(E3AP,
           "Failed to send xApp control to dApp %u for RAN function %u (err=%d)\n",
