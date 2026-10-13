@@ -26,7 +26,7 @@ add_library(e3ap e3_agent.c config/e3_config.c)
 
 # target_link_libraries(e3ap PUBLIC OCP_ITTI) # TODO
 
-target_link_libraries(e3ap PUBLIC ${CLIBE3_LIBRARIES} ${SERVICE_MODELS_LIBRARY})
+target_link_libraries(e3ap PUBLIC ${CLIBE3_LIBRARIES} ${SERVICE_MODELS_LIBRARY} log_headers)
 target_include_directories(e3ap PUBLIC ${JSON_C_INCLUDE_DIRS})
 
 if(E2_AGENT)

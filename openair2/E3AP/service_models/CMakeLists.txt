@@ -9,7 +9,7 @@ target_include_directories(e3_sm_worker PUBLIC
     ${CMAKE_SOURCE_DIR}/common/utils/LOG
     ${CLIBE3_INCLUDE_DIRS}
 )
-target_link_libraries(e3_sm_worker pthread)
+target_link_libraries(e3_sm_worker pthread log_headers)
 
 add_subdirectory(spectrum_sm)
 add_subdirectory(l1_kpm_sm)

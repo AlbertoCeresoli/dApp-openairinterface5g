@@ -31,7 +31,7 @@ target_include_directories(spectrum_sm PUBLIC
 
 target_compile_definitions(spectrum_sm PRIVATE E3_AGENT)
 
-target_link_libraries(spectrum_sm spectrum_sm_asn1 json-c rt pthread)
+target_link_libraries(spectrum_sm spectrum_sm_asn1 json-c rt pthread log_headers)
 add_dependencies(spectrum_sm spectrum_sm_asn1)
 
 if(SPECTRUM_SM_HAVE_PROTOBUF)

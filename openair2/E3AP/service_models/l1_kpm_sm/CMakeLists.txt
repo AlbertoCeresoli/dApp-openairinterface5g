@@ -29,7 +29,7 @@ target_link_libraries(l1_kpm_sm
 )
 
 target_include_directories(l1_kpm_sm PUBLIC ${L1_KPM_SM_ASN1_INCLUDE_DIR})
-target_link_libraries(l1_kpm_sm ${L1_KPM_SM_ASN1_LIB})
+target_link_libraries(l1_kpm_sm ${L1_KPM_SM_ASN1_LIB} log_headers)
 add_dependencies(l1_kpm_sm ${L1_KPM_SM_ASN1_LIB})
 
 if(L1_KPM_SM_HAVE_PROTOBUF)
