@@ -81,6 +81,15 @@ set(SM_ENCODING_GTP "PLAIN" CACHE STRING "The GTP SM encoding to use")
 set_property(CACHE SM_ENCODING_GTP PROPERTY STRINGS "PLAIN")
 message(STATUS "Selected GTP SM_ENCODING: ${SM_ENCODING_GTP}")
 
+# CCC Service Model. ran_func_ccc.c targets a FlexRIC CCC API (CCC_STATS_V1_0,
+# ccc_data_ie_wrapper.h) that no published FlexRIC provides, so it is opt-in.
+option(E2_CCC "Build the E2SM-CCC RAN function (needs a FlexRIC with a matching ccc_sm)" OFF)
+if(E2_CCC)
+  set(SM_ENCODING_CCC "JSON" CACHE STRING "The CCC SM encoding to use")
+  set_property(CACHE SM_ENCODING_CCC PROPERTY STRINGS "JSON")
+  message(STATUS "Selected CCC SM_ENCODING: ${SM_ENCODING_CCC}")
+endif()
+
 # DAPP Service Model
 if(E3_AGENT)
   set(SM_ENCODING_DAPP "ASN" CACHE STRING "The DAPP SM encoding to use")
