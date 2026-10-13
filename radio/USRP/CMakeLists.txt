@@ -3,10 +3,13 @@
 add_compile_options(-Wunused-parameter)
 #find_package(Boost REQUIRED)
 find_package(UHD REQUIRED UHD)
+# usrp_lib.cpp uses boost::this_thread; recent libuhd no longer pulls in
+# libboost_thread, so link it explicitly.
+find_package(Boost REQUIRED COMPONENTS thread)
 
 add_library(oai_usrpdevif MODULE usrp_lib.cpp)
 #target_include_directories(oai_usrpdevif PRIVATE Boost::boost)
-target_link_libraries(oai_usrpdevif PRIVATE ${UHD_LIBRARIES})
+target_link_libraries(oai_usrpdevif PRIVATE ${UHD_LIBRARIES} Boost::thread)
 target_include_directories(oai_usrpdevif PRIVATE ${UHD_INCLUDE_DIRS})
 target_link_libraries(oai_usrpdevif PRIVATE log_headers)
 set_target_properties(oai_usrpdevif PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
