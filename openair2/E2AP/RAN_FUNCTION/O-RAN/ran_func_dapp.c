@@ -12,6 +12,11 @@ static dapp_subs_data_t dapp_subs_data = {0};
  * cannot be observed from here either. */
 static atomic_bool e2_ric_seen = false;
 
+/* E3-SequenceID (1..2^32-1) is mandatory on an E3 xApp control, but the
+ * E2SM-DAPP control header carries no sequence id yet, so number relayed
+ * controls locally. The xApp cannot correlate them until the header has one. */
+static _Atomic uint32_t e2_ctrl_seq = 1;
+
 /**
  * @brief Create a byte_array_t from a C-string.
  *
@@ -483,7 +488,11 @@ sm_ag_if_ans_t write_ctrl_dapp_sm(void const* data)
       uint32_t data_size = ctrl->msg.frmt_1.data_size;
       const uint8_t* payload = ctrl->msg.frmt_1.data;
 
-      if (e3_send_xapp_control(dapp_id, ran_function_id, payload, data_size) != 0) {
+      uint32_t sequence_id = atomic_fetch_add(&e2_ctrl_seq, 1);
+      if (sequence_id == 0) /* skip 0 on wrap-around */
+        sequence_id = atomic_fetch_add(&e2_ctrl_seq, 1);
+
+      if (e3_send_xapp_control(dapp_id, ran_function_id, payload, data_size, sequence_id) != 0) {
         printf("[RAN FUNC DAPP CTRL] Failed to forward xApp control via E3 agent\n");
       }
 #endif
